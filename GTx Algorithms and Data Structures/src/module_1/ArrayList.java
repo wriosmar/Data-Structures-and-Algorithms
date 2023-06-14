@@ -93,7 +93,9 @@ public class ArrayList {
 	// prints the array. 
 	public void print() {
 		for(Object elem : array) {
-			System.out.print(elem + " ");
+			if(elem != null) {
+				System.out.print(elem + " ");
+			}
 		}
 		System.out.println();
 	}
