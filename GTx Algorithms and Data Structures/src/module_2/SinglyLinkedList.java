@@ -4,11 +4,13 @@ public class SinglyLinkedList<T> {
 	private Node<T> head;
 	private Node<T> tail;
 	
+	// constructor; sets head and tail to null. 
 	public SinglyLinkedList() {
 		head = null;
 		tail = null;
 	}
 	
+	// adds a new Node to the front of the list. 
 	public void addToFront(T newData) {
 		// check if list is empty.
 		if(head == null) {
@@ -21,6 +23,7 @@ public class SinglyLinkedList<T> {
 		}
 	}
 	
+	// adds a new Node to the back of the list. 
 	public void addToBack(T newData) {
 		// check if list is empty.
 		if(head == null) {
@@ -32,12 +35,60 @@ public class SinglyLinkedList<T> {
 		}
 	}
 	
+	// removes a Node from the front of the list.
 	public T removeFromFront() {
-		return null;
+		Node<T> removedNode = head;
+		if(head == tail) {
+			head = null;
+			tail = null;
+		} else {			
+			head = head.getNext();			
+		}
+		return removedNode.getData();		
 	}
 	
+	// removes a Node from the back of the list.
 	public T removeFromBack() {
-		return null;
-	}	
+		Node<T> removedNode = tail;
+		if(head == tail) {
+			head = null;
+			tail = null;
+		} else {
+			Node<T> current = head;
+			while(current.getNext().getNext() != null) {
+				current = current.getNext();
+			}
+			current.setNext(null);
+			tail = current;
+		}
+		return removedNode.getData();
+	}
+	
+	// returns the head of the list as String. 
+	public String getHead() {
+		if(head == null) {
+			return "";
+		}
+		return head.getData().toString();
+	}
+	
+	// returns the tail of the list as String. 
+	public String getTail() {
+		if(tail == null) {
+			return "";
+		}
+		return tail.getData().toString();
+	}
+	
+	// prints the list out to console. 
+	public void print() {
+		String print = "";
+		Node<T> current = head;
+		while(current != null) {
+			print += current.getData() + " ";
+			current = current.getNext();
+		}
+		System.out.print(print);
+	}
 
 }
