@@ -1,5 +1,5 @@
 package module_3;
 
-public class ArrayQueue {
+public class ArrayQueue<T> {
 
 }
