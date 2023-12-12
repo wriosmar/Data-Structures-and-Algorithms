@@ -9,9 +9,9 @@ public class LinkedList_Tester {
 		numbersSSL.addToBack(3);
 		numbersSSL.addToFront(1);
 		
-		numbersSSL.removeFromBack();
-		numbersSSL.removeFromBack();
-		numbersSSL.removeFromBack();
+		//numbersSSL.removeFromBack();
+		//numbersSSL.removeFromBack();
+		//numbersSSL.removeFromBack();
 		
 		numbersSSL.print(); System.out.println();
 		

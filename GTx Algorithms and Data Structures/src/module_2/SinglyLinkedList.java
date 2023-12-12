@@ -3,6 +3,7 @@ package module_2;
 public class SinglyLinkedList<T> {
 	private Node<T> head;
 	private Node<T> tail;
+	private int size;
 	
 	// constructor; sets head and tail to null. 
 	public SinglyLinkedList() {
@@ -21,6 +22,7 @@ public class SinglyLinkedList<T> {
 			newNode.setNext(head);
 			head = newNode;
 		}
+		size++;
 	}
 	
 	// adds a new Node to the back of the list. 
@@ -33,6 +35,7 @@ public class SinglyLinkedList<T> {
 			tail.setNext(new Node<T>(newData));
 			tail = tail.getNext();
 		}
+		size++;
 	}
 	
 	// removes a Node from the front of the list.
@@ -44,6 +47,7 @@ public class SinglyLinkedList<T> {
 		} else {			
 			head = head.getNext();			
 		}
+		size--;
 		return removedNode.getData();		
 	}
 	
@@ -61,6 +65,7 @@ public class SinglyLinkedList<T> {
 			current.setNext(null);
 			tail = current;
 		}
+		size--;
 		return removedNode.getData();
 	}
 	
