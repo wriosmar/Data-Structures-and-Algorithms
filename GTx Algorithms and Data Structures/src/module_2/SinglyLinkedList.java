@@ -3,7 +3,7 @@ package module_2;
 public class SinglyLinkedList<T> {
 	private Node<T> head;
 	private Node<T> tail;
-	private int size;
+	private int size; //8905
 	
 	// constructor; sets head and tail to null. 
 	public SinglyLinkedList() {
