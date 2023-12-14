@@ -15,11 +15,13 @@ public class ArrayQueue<T> {
 	// adds the data to the back of the queue.
 	public void enqueue(T data) {
 		// TODO
+		size++;
 	}
 	
 	// removes and returns the data from the front of the queue.
 	public T dequeue() {
 		//TODO
+		size--;
 		return null;
 	}
 	
