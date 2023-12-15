@@ -80,16 +80,5 @@ public class ArrayQueue<T> {
 	public int getFront() {
 		return front;
 	}
-	
-	// copies the elements from original array to a new array double the size.
-	public Object[] resize() {
-		// create a new array double the size of the original.
-		Object[] newArray = new Object[backingArray.length * 2];
-		// copy the elements of the original to the new array.
-		for(int i = 0; i < backingArray.length; i++) {
-			newArray[i] = backingArray[i];
-		}
-		return newArray;
-	}
 
 }
