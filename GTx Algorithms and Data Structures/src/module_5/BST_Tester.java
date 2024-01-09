@@ -6,16 +6,11 @@ public class BST_Tester {
 		// TODO Auto-generated method stub
 		BST<Integer> test = new BST<Integer>();
 		
-		test.add(50);
-		test.add(15);
-		test.add(75);
-		test.add(100);
-		test.add(5);
-		test.add(25);
-		test.add(20);
+		test.add(1);
+		test.add(2);
+		test.add(0);
 		
-		
-		test.remove(15);
+		test.remove(1);
 		
 		test.printBST(test.getRoot());
 	}

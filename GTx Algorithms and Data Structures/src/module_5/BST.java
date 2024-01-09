@@ -61,11 +61,11 @@ public class BST<T extends Comparable<? super T>> {
 			if(curr.getRight() == null && curr.getLeft() == null) {
 				return null;
 			}
-			else if(curr.getRight() != null) {
+			else if(curr.getRight() != null && curr.getLeft() == null) {
 				return curr.getRight();
 			}
-			else if(curr.getLeft() != null) {
-				curr.getLeft();
+			else if(curr.getLeft() != null && curr.getRight() == null) {
+				return curr.getLeft();
 			}
 			else {
 				BSTNode<T> holdSwap = new BSTNode<T>(null);
@@ -83,8 +83,8 @@ public class BST<T extends Comparable<? super T>> {
 		}
 		else {
 			curr.setLeft(successorMove(curr.getLeft(), holdSwap));
+			return curr;
 		}
-		return curr;
 	}
 	
 	public BSTNode<T> getRoot() {
