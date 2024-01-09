@@ -94,5 +94,27 @@ public class BST<T extends Comparable<? super T>> {
 	public int size() {
 		return size;
 	}
+	
+	public void printBST(BSTNode<T> root) {
+		printHelp(root, 0);
+	}
+	
+	private void printHelp(BSTNode<T> root, int space) {
+		if(root == null) {
+			return;
+		}
+		
+		space += 5;
+		
+		printHelp(root.getRight(), space);
+		
+		System.out.print("\n");
+		for(int i = 5; i < space; i++) {
+			System.out.print(" ");
+		}
+		System.out.print(root.getData() + "\n");
+		
+		printHelp(root.getLeft(), space);
+	}
 
 }
