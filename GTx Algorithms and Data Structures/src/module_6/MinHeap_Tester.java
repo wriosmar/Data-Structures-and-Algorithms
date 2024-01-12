@@ -17,8 +17,12 @@ public class MinHeap_Tester {
 		test.add(8);
 		test.add(9);
 		test.add(10);
+		//test.add(11);
+		//test.add(12);
+		//test.add(13);
 		
 		test.remove();
+		//test.add(0);
 		
 		test.printHeap();
 

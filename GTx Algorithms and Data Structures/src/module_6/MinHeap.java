@@ -22,24 +22,28 @@ public class MinHeap<T extends Comparable<? super T>> {
 			throw new IllegalArgumentException("Data can't be null!");
 		}
 		// double the capacity if heap is full.
-		if(size == backingArray.length) {
+		if(size + 1 == backingArray.length) {
 			backingArray = resize();
 		}
 		// add element to end of heap.
 		backingArray[size + 1] = data;
 		size++;
 		// up heap start from recently added element.
-		int currIndex = size;
-		// base case is when root index is reached.
-		while(currIndex != 1) {
+		upHeap(backingArray, size);
+	}
+	
+	private void upHeap(T[] backingAarray, int currIndex) {
+		// base case end of upHeap.
+		if(currIndex != 1) {
 			int parentIndex = currIndex / 2;
-			// swap elements if current element is less than parent.
+			// if parent is more than child, swap.
 			if(backingArray[currIndex].compareTo(backingArray[parentIndex]) <= -1) {
 				T parent = backingArray[parentIndex];
 				backingArray[parentIndex] = backingArray[currIndex];
 				backingArray[currIndex] = parent;
 			}
-			currIndex = parentIndex;
+			// recurse
+			upHeap(backingArray, parentIndex);
 		}
 	}
 	
@@ -49,7 +53,7 @@ public class MinHeap<T extends Comparable<? super T>> {
 		// create new heap double the capacity.
 		T[] newArray = (T[]) new Comparable[backingArray.length * 2];
 		// move data from old heap to new heap.
-		for(int i = 1; i < backingArray.length - 1; i++) {
+		for(int i = 1; i < backingArray.length; i++) {
 			newArray[i] = backingArray[i];
 		}
 		
@@ -70,30 +74,30 @@ public class MinHeap<T extends Comparable<? super T>> {
 		size--;
 		
 		// down heap start from the root index.
-		downHeap(backingArray, size, 1);
+		downHeap(backingArray, 1);
 		
 		return min;
 	}
 	
-	private void downHeap(T[] backingArray, int size, int currIndex) {
+	private void downHeap(T[] backingArray, int currIndex) {
 		int priorityIndex = currIndex;
 		int leftIndex = 2 * currIndex;
 		int rightIndex = 2 * currIndex + 1;
-		
+		// if left child is less than priority element, priority is left child.
 		if(leftIndex < size + 1 && backingArray[leftIndex].compareTo(backingArray[priorityIndex]) <= -1) {
 			priorityIndex = leftIndex;
 		}
-		
+		// if right child is less than priority element, priority is right child.
 		if(rightIndex < size + 1 && backingArray[rightIndex].compareTo(backingArray[priorityIndex]) <= -1) {
 			priorityIndex = rightIndex;
 		}
-		
+		// if priority isn't equal to current index, that means a swap is needed.
 		if(priorityIndex != currIndex) {
-			T swap = backingArray[currIndex];
-			backingArray[currIndex] = backingArray[priorityIndex];
-			backingArray[priorityIndex] = swap;
-			
-			downHeap(backingArray, size, priorityIndex);
+			T priority = backingArray[priorityIndex];
+			backingArray[priorityIndex] = backingArray[currIndex];
+			backingArray[currIndex] = priority;
+			// recurse 
+			downHeap(backingArray, priorityIndex);
 		}
 		
 	}
