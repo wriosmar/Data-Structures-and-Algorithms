@@ -2,7 +2,6 @@ package module_7;
 
 import java.util.NoSuchElementException;
 
-@SuppressWarnings("unused")
 public class ExternalChainingHashMap<K, V> {
 	
 	public static final int INITIAL_CAPACITY = 13;
@@ -14,6 +13,11 @@ public class ExternalChainingHashMap<K, V> {
 	@SuppressWarnings("unchecked")
 	public ExternalChainingHashMap() {
 		table = (ExternalChainingMapEntry<K, V>[]) new ExternalChainingMapEntry[INITIAL_CAPACITY];
+	}
+	
+	@SuppressWarnings("unchecked")
+	private ExternalChainingHashMap(int length) {
+		table = (ExternalChainingMapEntry<K, V>[]) new ExternalChainingMapEntry[length];
 	}
 	
 	public V put(K key, V value) {
@@ -34,7 +38,7 @@ public class ExternalChainingHashMap<K, V> {
 			table[hashcode] = new ExternalChainingMapEntry<K, V>(key, value);
 		} else {
 			// check for duplicate keys at hash code index.
-			 ExternalChainingMapEntry<K, V> curr = table[hashcode];
+			ExternalChainingMapEntry<K, V> curr = table[hashcode];
 			
 			while(curr != null) {
 				K currKey = curr.getKey();
@@ -60,11 +64,53 @@ public class ExternalChainingHashMap<K, V> {
 	
 	public V remove(K key) {
 		//TODO
+		// check key & value are non null
+		if(key == null) {
+			throw new IllegalArgumentException("Key can't be null!");
+		}
+		
+		int hashcode = key.hashCode() % table.length;
+		boolean found = false;
+		
+		if(table[hashcode] == null) {
+			// key is not in table.
+			throw new NoSuchElementException("Key doesn't exist!");
+		} else {
+			// go through LinkedList (ECME) to find key and remove.
+			// Throw exception if not found. 
+			ExternalChainingMapEntry<K, V> curr = table[hashcode];
+			
+			while(curr != null || found != true) {
+				K currKey = curr.getKey();
+				if(currKey.equals(key)) {
+					// remove key & value pair and update LinkedList (ECME)
+					V removed = curr.getValue();
+					
+					return removed;
+				}
+			}
+		}
+		
 		return null;
 	}
 	
 	private void resizeBackingTable(int length) {
-		//TODO
+		// create new table
+		ExternalChainingHashMap<K, V> newTable = new ExternalChainingHashMap<K, V>(length);
+		
+		// rehash and add entries to new table.
+		for(int i = 0; i < table.length; i++) {
+			if(table[i] != null) {
+				ExternalChainingMapEntry<K, V> curr = table[i];
+				
+				while(curr != null) {
+					newTable.put(curr.getKey(), curr.getValue());
+				}
+			}
+		}
+		
+		// update the old table to new table.
+		table = newTable.getTable();
 	}
 	
 	public ExternalChainingMapEntry<K, V>[] getTable() {
