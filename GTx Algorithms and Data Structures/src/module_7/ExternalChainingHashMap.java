@@ -1,6 +1,7 @@
 package module_7;
 
 import java.util.NoSuchElementException;
+import java.lang.Math;
 
 public class ExternalChainingHashMap<K, V> {
 	
@@ -15,11 +16,6 @@ public class ExternalChainingHashMap<K, V> {
 		table = (ExternalChainingMapEntry<K, V>[]) new ExternalChainingMapEntry[INITIAL_CAPACITY];
 	}
 	
-	@SuppressWarnings("unchecked")
-	private ExternalChainingHashMap(int length) {
-		table = (ExternalChainingMapEntry<K, V>[]) new ExternalChainingMapEntry[length];
-	}
-	
 	public V put(K key, V value) {
 		// check key & value are non null
 		if(key == null || value == null) {
@@ -27,11 +23,11 @@ public class ExternalChainingHashMap<K, V> {
 		}
 		// check load factor does not exceed max load factor.
 		// if it does, resize (2 * oldLength) + 1.
-		if((size + 1) % table.length > MAX_LOAD_FACTOR) {
+		if((double)(size + 1) / table.length > MAX_LOAD_FACTOR) {
 			resizeBackingTable((2 * table.length) + 1);
 		}
 		
-		int hashcode = key.hashCode() % table.length;
+		int hashcode = Math.abs(key.hashCode() % table.length);
 		
 		if(table[hashcode] == null) {
 			// create new LinkedList (ECME) at the index.
@@ -58,18 +54,16 @@ public class ExternalChainingHashMap<K, V> {
 		}
 		
 		size++;
-				
 		return null;
 	}
 	
 	public V remove(K key) {
-		//TODO
 		// check key & value are non null
 		if(key == null) {
 			throw new IllegalArgumentException("Key can't be null!");
 		}
 		
-		int hashcode = key.hashCode() % table.length;
+		int hashcode = Math.abs(key.hashCode() % table.length);
 		boolean found = false;
 		
 		if(table[hashcode] == null) {
@@ -79,24 +73,39 @@ public class ExternalChainingHashMap<K, V> {
 			// go through LinkedList (ECME) to find key and remove.
 			// Throw exception if not found. 
 			ExternalChainingMapEntry<K, V> curr = table[hashcode];
+			ExternalChainingMapEntry<K, V> prev = null;
 			
-			while(curr != null || found != true) {
+			while(curr != null) {
 				K currKey = curr.getKey();
 				if(currKey.equals(key)) {
 					// remove key & value pair and update LinkedList (ECME)
 					V removed = curr.getValue();
-					
+					// if previous is null, then update the head.
+					if(prev == null) {
+						table[hashcode] = curr.getNext();
+					} else {
+						// Update the LinkedList (ECME)
+						prev.setNext(curr.getNext());
+					}
+					size--;
 					return removed;
 				}
+				prev = curr;
+				curr = curr.getNext();
 			}
+		}
+		
+		if(found == false) {
+			throw new NoSuchElementException("Key doens't exist!");
 		}
 		
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void resizeBackingTable(int length) {
 		// create new table
-		ExternalChainingHashMap<K, V> newTable = new ExternalChainingHashMap<K, V>(length);
+		ExternalChainingMapEntry<K, V>[] newTable = (ExternalChainingMapEntry<K, V>[]) new ExternalChainingMapEntry[length];
 		
 		// rehash and add entries to new table.
 		for(int i = 0; i < table.length; i++) {
@@ -104,13 +113,22 @@ public class ExternalChainingHashMap<K, V> {
 				ExternalChainingMapEntry<K, V> curr = table[i];
 				
 				while(curr != null) {
-					newTable.put(curr.getKey(), curr.getValue());
+					K currKey = curr.getKey();
+					V currVal = curr.getValue();
+					
+					int hashcode = Math.abs(currKey.hashCode() % newTable.length);
+										
+					ExternalChainingMapEntry<K, V> head = new ExternalChainingMapEntry<K, V>(currKey, currVal);
+					head.setNext(newTable[hashcode]);
+					newTable[hashcode] = head;
+					
+					curr = curr.getNext();
 				}
 			}
 		}
 		
 		// update the old table to new table.
-		table = newTable.getTable();
+		table = newTable;
 	}
 	
 	public ExternalChainingMapEntry<K, V>[] getTable() {
