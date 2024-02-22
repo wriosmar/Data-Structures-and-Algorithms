@@ -2,6 +2,53 @@ package module_8;
 
 public class AVL<T extends Comparable<? super T>> {
 	
+	private AVLNode<T> root;
+	private int size;
+	
+	public void add(T data) {
+		root = addHelper(root, data);
+	}
+	
+	private AVLNode<T> addHelper(AVLNode<T> curr, T data){
+		// null data is not allowed
+		if(data == null) {
+			throw new IllegalArgumentException("Data can't be null.");
+		}
+		// base case
+		if(curr == null) {
+			size++;
+			return new AVLNode<T>(data);
+		}
+		else if(data.compareTo(curr.getData()) >= 1) {
+			// data > current data
+			curr.setRight(addHelper(curr.getRight(), data));
+		}
+		else if(data.compareTo(curr.getData()) <= -1) {
+			// data < current data
+			curr.setLeft(addHelper(curr.getLeft(), data));
+		}
+		return curr;
+	}
+	
+	public T remove(T data) {
+		AVLNode<T> hold = new AVLNode<T>(null);
+		return null;
+	}
+	
+	private AVLNode<T> removeHelper(AVLNode<T> curr, T data, AVLNode<T> hold) {
+		return null;
+	}
+	
+	private AVLNode<T> successor(AVLNode<T> curr, AVLNode<T> holdSwap) {
+		if(curr.getLeft() == null) {
+			holdSwap.setData(curr.getData());
+			return curr.getRight();
+		} else {
+			curr.setLeft(successor(curr.getLeft(), holdSwap));
+			return curr;
+		}
+	}
+	
 	public void updateHeightAndBF(AVLNode<T> currentNode) {
 		int leftChildHeight;
 		int rightChildHeight;
@@ -69,6 +116,14 @@ public class AVL<T extends Comparable<? super T>> {
 		}
 		
 		return currentNode;
+	}
+	
+	public AVLNode<T> getRoot(){
+		return root;
+	}
+	
+	public int size() {
+		return size;
 	}
 
 }

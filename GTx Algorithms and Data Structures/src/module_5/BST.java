@@ -27,7 +27,6 @@ public class BST<T extends Comparable<? super T>> {
 		else if(data.compareTo(curr.getData()) <= -1) {
 			// data < current data
 			curr.setLeft(addHelp(curr.getLeft(), data));
-			
 		}
 		return curr;
 	}
