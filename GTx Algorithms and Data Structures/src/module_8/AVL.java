@@ -69,21 +69,21 @@ public class AVL<T extends Comparable<? super T>> {
 				return curr.getLeft();
 			}
 			else {
-				AVLNode<T> holdSwap = new AVLNode<T>(null);
-				curr.setRight(successor(curr.getRight(), holdSwap));
-				curr.setData(holdSwap.getData());
+				AVLNode<T> swap = new AVLNode<T>(null);
+				curr.setRight(successor(curr.getRight(), swap));
+				curr.setData(swap.getData());
 			}
 		}
 		return balance(curr);
 	}
 	
-	private AVLNode<T> successor(AVLNode<T> curr, AVLNode<T> holdSwap) {
+	private AVLNode<T> successor(AVLNode<T> curr, AVLNode<T> swap) {
 		if(curr.getLeft() == null) {
-			holdSwap.setData(curr.getData());
+			swap.setData(curr.getData());
 			return curr.getRight();
 		} else {
-			curr.setLeft(successor(curr.getLeft(), holdSwap));
-			return curr;
+			curr.setLeft(successor(curr.getLeft(), swap));
+			return balance(curr);
 		}
 	}
 	
@@ -162,6 +162,25 @@ public class AVL<T extends Comparable<? super T>> {
 	
 	public int size() {
 		return size;
+	}
+	
+	
+	// EXTRA METHODS FOR TESTING
+	public void get(AVLNode<T> curr, T data) {
+		if(curr == null) {
+			System.out.println("NOT FOUND");
+		}
+		else if(data.compareTo(curr.getData()) >= 1) {
+			curr = curr.getRight();
+			get(curr, data);
+		}
+		else if(data.compareTo(curr.getData()) <= -1) {
+			curr = curr.getLeft();
+			get(curr, data);
+		}
+		else {
+			System.out.println(curr.getData() + " " + curr.getHeight() + " " + curr.getBalanceFactor());
+		}
 	}
 
 }
