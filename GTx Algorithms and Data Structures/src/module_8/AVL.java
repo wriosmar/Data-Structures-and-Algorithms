@@ -1,5 +1,7 @@
 package module_8;
 
+import java.util.NoSuchElementException;
+
 public class AVL<T extends Comparable<? super T>> {
 	
 	private AVLNode<T> root;
@@ -17,7 +19,7 @@ public class AVL<T extends Comparable<? super T>> {
 		// base case
 		if(curr == null) {
 			size++;
-			return new AVLNode<T>(data);
+			return balance(new AVLNode<T>(data));
 		}
 		else if(data.compareTo(curr.getData()) >= 1) {
 			// data > current data
@@ -27,16 +29,52 @@ public class AVL<T extends Comparable<? super T>> {
 			// data < current data
 			curr.setLeft(addHelper(curr.getLeft(), data));
 		}
-		return curr;
+		
+		return balance(curr);
 	}
 	
 	public T remove(T data) {
 		AVLNode<T> hold = new AVLNode<T>(null);
-		return null;
+		root = removeHelper(root, data, hold);
+		return hold.getData();
 	}
 	
 	private AVLNode<T> removeHelper(AVLNode<T> curr, T data, AVLNode<T> hold) {
-		return null;
+		if(data == null) {
+			throw new IllegalArgumentException("Data can't be null.");
+		}
+		// data not found in AVL
+		if(curr == null) {
+			throw new NoSuchElementException("Data not found in AVL Tree.");
+		}
+		else if(data.compareTo(curr.getData()) >= 1) {
+			// data > current data
+			curr.setRight(removeHelper(curr.getRight(), data, hold));
+		}
+		else if(data.compareTo(curr.getData()) <= -1) {
+			// data < current data
+			curr.setLeft(removeHelper(curr.getLeft(), data, hold));
+		}
+		else {
+			// data to be removed found.
+			hold.setData(curr.getData());
+			size--;
+			if(curr.getRight() == null && curr.getLeft() == null) {
+				return null;
+			}
+			else if(curr.getRight() != null && curr.getLeft() == null) {
+				return curr.getRight();
+			}
+			else if(curr.getLeft() != null && curr.getRight() == null) {
+				return curr.getLeft();
+			}
+			else {
+				AVLNode<T> holdSwap = new AVLNode<T>(null);
+				curr.setRight(successor(curr.getRight(), holdSwap));
+				curr.setData(holdSwap.getData());
+			}
+		}
+		return balance(curr);
 	}
 	
 	private AVLNode<T> successor(AVLNode<T> curr, AVLNode<T> holdSwap) {
