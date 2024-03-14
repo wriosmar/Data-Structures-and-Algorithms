@@ -25,7 +25,15 @@ public class Sorting {
 	
 	// Implement Selection Sort
 	public static<T> void selectionSort(T[] arr, Comparator<T> comparator) {
-		//TODO
+		for(int n = arr.length - 1; n > 1; n--) {
+			int max_index = n;
+			for(int i = 0; i < n; i++) {
+				if(comparator.compare(arr[i], arr[max_index]) > 1) {
+					max_index = i;
+				}
+			}
+			arr = swap(arr, n, max_index);
+		}
 	}
 	
 	// Implement Insertion Sort
