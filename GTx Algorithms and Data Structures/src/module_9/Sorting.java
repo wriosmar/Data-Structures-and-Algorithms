@@ -13,7 +13,7 @@ public class Sorting {
 			int last_swapped = 0;
 			
 			while(i < stop_index) {
-				if(comparator.compare(arr[i], arr[i + 1]) > 1) {
+				if(comparator.compare(arr[i], arr[i + 1]) > 0) {
 					arr = swap(arr, i, i + 1);
 					last_swapped = i;
 				}
@@ -27,8 +27,9 @@ public class Sorting {
 	public static<T> void selectionSort(T[] arr, Comparator<T> comparator) {
 		for(int n = arr.length - 1; n > 1; n--) {
 			int max_index = n;
+			
 			for(int i = 0; i < n; i++) {
-				if(comparator.compare(arr[i], arr[max_index]) > 1) {
+				if(comparator.compare(arr[i], arr[max_index]) > 0) {
 					max_index = i;
 				}
 			}
@@ -38,7 +39,13 @@ public class Sorting {
 	
 	// Implement Insertion Sort
 	public static<T> void insertionSort(T[] arr, Comparator<T> comparator) {
-		//TODO
+		for(int n = 1; n < arr.length - 1; n++) {
+			int i = n;
+			
+			while(i != 0 && comparator.compare(arr[i], arr[i - 1]) < 0) {
+				arr = swap(arr, i, i - 1);
+			}
+		}
 	}
 	
 	private static <T> T[] swap(T[] arr, int index_1, int index_2) {
