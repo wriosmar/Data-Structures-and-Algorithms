@@ -25,7 +25,7 @@ public class Sorting {
 	
 	// Implement Selection Sort
 	public static<T> void selectionSort(T[] arr, Comparator<T> comparator) {
-		for(int n = arr.length - 1; n > 1; n--) {
+		for(int n = arr.length - 1; n > 0; n--) {
 			int max_index = n;
 			
 			for(int i = 0; i < n; i++) {
@@ -37,13 +37,40 @@ public class Sorting {
 		}
 	}
 	
+	// Testing algorithm
+	public void selectionSort_int(Integer[] arr) {
+		for(int n = arr.length - 1; n > 0; n--) {
+			int max_index = n;
+			
+			for(int i = 0; i < n; i++) {
+				if(arr[i].compareTo(arr[max_index]) > 0) {
+					max_index = i;
+				}
+			}
+			arr = swap(arr, n, max_index);
+		}
+	}
+	
 	// Implement Insertion Sort
 	public static<T> void insertionSort(T[] arr, Comparator<T> comparator) {
-		for(int n = 1; n < arr.length - 1; n++) {
-			int i = n;
+		for(int n = 0; n < arr.length - 1; n++) {
+			int i = n + 1;
 			
 			while(i != 0 && comparator.compare(arr[i], arr[i - 1]) < 0) {
 				arr = swap(arr, i, i - 1);
+				i--;
+			}
+		}
+	}
+	
+	// Testing algorithm
+	public void insertionSort_int(Integer[] arr) {
+		for(int n = 0; n < arr.length - 1; n++) {
+			int i = n + 1;
+			
+			while(i != 0 && arr[i].compareTo(arr[i - 1]) < 0) {
+				arr = swap(arr, i, i - 1);
+				i--;
 			}
 		}
 	}
