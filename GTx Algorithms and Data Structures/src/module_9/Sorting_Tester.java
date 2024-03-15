@@ -3,11 +3,10 @@ package module_9;
 public class Sorting_Tester {
 
 	public static void main(String[] args) {
-		Integer[] test = new Integer[] {1, 0};
+		Integer[] test = new Integer[] {4, 3, 1, 5, 2, 6, 7};
 		Sorting sort = new Sorting();
 		
-		sort.insertionSort_int(test);
-		print(test);
+		sort.cocktailShakerSort_int(test);
 		
 		
 	}
