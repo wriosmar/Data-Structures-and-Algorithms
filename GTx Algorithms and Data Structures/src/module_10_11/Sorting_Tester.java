@@ -6,7 +6,8 @@ public class Sorting_Tester {
 		Integer[] test = new Integer[] {4, 3, 1, 5, 2, 6, 7};
 		Sorting sort = new Sorting();
 		
-		sort.cocktailShakerSort_int(test);
+		sort.mergeSort_int(test);
+		print(test);
 		
 		
 	}
