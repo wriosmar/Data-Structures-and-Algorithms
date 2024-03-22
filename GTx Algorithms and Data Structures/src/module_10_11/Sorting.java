@@ -1,6 +1,7 @@
 package module_10_11;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 
 public class Sorting {
 	// Generic methods are used for the assignment, the rest are for testing purposes and other assignments.
@@ -119,6 +120,51 @@ public class Sorting {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static void lsdRadixSort(int[] arr) {
+		LinkedList<Integer>[] buckets = new LinkedList[19];
+		
+		for(int n = 0; n < buckets.length; n++) {
+			buckets[n] = new LinkedList<>();
+		}
+		
+		int k = getMaxLength(arr);
+		int length = arr.length;
+		
+		int base = 1;
+		
+		for(int i = 0; i < k; i++) {
+			for(int j = 0; j < length; j++) {
+				int bucket = (arr[j] / base % 10 + 9);
+				
+				buckets[bucket].add(arr[j]);
+			}
+			
+			int index = 0;
+			for(LinkedList<Integer> bucket : buckets) {
+				while(bucket.isEmpty() != true) {
+					arr[index] = bucket.pop();
+					index++;
+				}
+			}
+			
+			base = base * 10;
+		}
+	}
+	
+	private static int getMaxLength(int[] arr) {
+		int max_length = 0;
+		
+		for(int num : arr) {
+			int abs_val_length = String.valueOf(Math.abs(num)).length();
+			if(abs_val_length > max_length) {
+				max_length = abs_val_length;
+			}
+		}
+		
+		return max_length;
+	}
+	
 	public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
 		if(arr.length <= 1){
 			return;
@@ -129,6 +175,9 @@ public class Sorting {
 		
 		T[] left = copy_range(arr, 0, mid_idx);
 		T[] right = copy_range(arr, mid_idx, length);
+		
+		mergeSort(left, comparator);
+		mergeSort(right, comparator);
 		
 		merge(arr, left, right, comparator);
 	}
