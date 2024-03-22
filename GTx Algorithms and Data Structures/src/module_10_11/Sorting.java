@@ -119,7 +119,7 @@ public class Sorting {
 		}
 	}
 	
-	public static <T> void mergeSort(T[] arr, Comparator<T> comarator) {
+	public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
 		if(arr.length <= 1){
 			return;
 		}
@@ -130,7 +130,36 @@ public class Sorting {
 		T[] left = copy_range(arr, 0, mid_idx);
 		T[] right = copy_range(arr, mid_idx, length);
 		
-		// merge(arr, left, right);
+		merge(arr, left, right, comparator);
+	}
+	
+	private static <T> void merge(T[] arr, T[] left, T[] right, Comparator<T> comp) {
+		int left_idx = 0;
+		int right_idx = 0;
+		int original_idx = 0;
+		
+		while(left_idx < left.length && right_idx < right.length) {
+			if(comp.compare(left[left_idx], right[right_idx]) <= 0) {
+				arr[original_idx] = left[left_idx];
+				left_idx++;
+			} else {
+				arr[original_idx] = right[right_idx];
+				right_idx++;
+			}
+			original_idx++;
+		}
+		
+		while(left_idx < left.length) {
+			arr[original_idx] = left[left_idx];
+			left_idx++;
+			original_idx++;
+		}
+		
+		while(right_idx < right.length) {
+			arr[original_idx] = right[right_idx];
+			right_idx++;
+			original_idx++;
+		}
 	}
 	
 	public void mergeSort_int(Integer[] arr) {
@@ -147,10 +176,10 @@ public class Sorting {
 		mergeSort_int(left);
 		mergeSort_int(right);
 				
-		merge(arr, left, right);
+		merge_int(arr, left, right);
 	}
 	
-	private static void merge(Integer[] arr, Integer[] left, Integer[] right) {
+	private static void merge_int(Integer[] arr, Integer[] left, Integer[] right) {
 		int left_idx = 0;
 		int right_idx = 0;
 		int original_idx = 0;
@@ -179,12 +208,15 @@ public class Sorting {
 		}
 	}
 	
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings("unchecked")
 	private static <T> T[] copy_range(T[] arr, int start, int end) {
 		T[] copy = (T[]) new Object[end - start];
 		
+		int copy_curr = 0;
+		
 		for(int i = start; i < end; i++) {
-			copy[i] = arr[i];
+			copy[copy_curr] = arr[i];
+			copy_curr++;
 		}
 		return copy;
 	}
