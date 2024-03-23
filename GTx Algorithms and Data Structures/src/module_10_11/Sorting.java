@@ -119,6 +119,49 @@ public class Sorting {
 		}
 	}
 	
+	// Implement Quick Sort.
+	public static void quickSort(Integer[] arr) {
+		quickSort(arr, 0, arr.length - 1);
+	}
+	
+	// Implement Quick Sort.
+	// Wrapper method for Quick Sort.
+	public static void quickSort(Integer[] arr, int left, int right) {
+		if(right - left < 1) {
+			return;
+		}
+		
+		// Random on other occasions. 
+		int pivot_idx = right;
+		Integer pivot = arr[pivot_idx];
+		
+		swap(arr, left, pivot_idx);
+		
+		int i = left + 1;
+		int j = right;
+		
+		while(j >= i) {
+			while(j >= i && arr[i] <= pivot) {
+				i++;
+			}
+			
+			while(j >= i && arr[j] >= pivot) {
+				j--;
+			}
+			
+			if(j >= i) {
+				swap(arr, i, j);
+				i++;
+				j--;
+			}
+		}
+		
+		swap(arr, left, j);
+		
+		quickSort(arr, left, j - 1);
+		quickSort(arr, j + 1, right);
+	}
+	
 	// Implement LSD Radix Sort.
 	@SuppressWarnings("unchecked")
 	public static void lsdRadixSort(Integer[] arr) {
