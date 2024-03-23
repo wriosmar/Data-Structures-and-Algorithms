@@ -1,13 +1,12 @@
 package module_10_11;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 
 public class Sorting {
 	// Generic methods are used for the assignment, the rest are for testing purposes and other assignments.
 	
-	// Implement Bubble Sort
-	public void bubbleSort_int(Integer[] arr) {
+	// Implement Bubble Sort.
+	public void bubbleSort(Integer[] arr) {
 		int iter = 0;
 		int compares = 0;
 		int swaps = 0;
@@ -35,8 +34,8 @@ public class Sorting {
 		}
 	}
 	
-	// Implement Selection Sort
-	public void selectionSort_int(Integer[] arr) {
+	// Implement Selection Sort.
+	public void selectionSort(Integer[] arr) {
 		int iter = 0;
 		int compares = 0;
 		int swaps = 0;
@@ -59,8 +58,8 @@ public class Sorting {
 		}
 	}
 	
-	// Implement Insertion Sort
-	public void insertionSort_int(Integer[] arr) {
+	// Implement Insertion Sort.
+	public void insertionSort(Integer[] arr) {
 		int iter = 0;
 		int compares = 0;
 		int swaps = 0;
@@ -82,8 +81,8 @@ public class Sorting {
 		}
 	}
 	
-	// Implement CocktailShakcerSort
-	public void cocktailShakerSort_int(Integer[] arr) {
+	// Implement CocktailShakcerSort.
+	public void cocktailShakerSort(Integer[] arr) {
 		int iter = 0;
 		int compares = 0;
 		int swaps = 0;
@@ -120,8 +119,9 @@ public class Sorting {
 		}
 	}
 	
+	// Implement LSD Radix Sort.
 	@SuppressWarnings("unchecked")
-	public static void lsdRadixSort(int[] arr) {
+	public static void lsdRadixSort(Integer[] arr) {
 		LinkedList<Integer>[] buckets = new LinkedList[19];
 		
 		for(int n = 0; n < buckets.length; n++) {
@@ -152,7 +152,9 @@ public class Sorting {
 		}
 	}
 	
-	private static int getMaxLength(int[] arr) {
+	// Get the max length of an array of Integers.
+	// Helper method for LSD Radix.
+	private static int getMaxLength(Integer[] arr) {
 		int max_length = 0;
 		
 		for(int num : arr) {
@@ -165,53 +167,8 @@ public class Sorting {
 		return max_length;
 	}
 	
-	public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
-		if(arr.length <= 1){
-			return;
-		}
-		
-		int length = arr.length;
-		int mid_idx = length / 2;
-		
-		T[] left = copy_range(arr, 0, mid_idx);
-		T[] right = copy_range(arr, mid_idx, length);
-		
-		mergeSort(left, comparator);
-		mergeSort(right, comparator);
-		
-		merge(arr, left, right, comparator);
-	}
-	
-	private static <T> void merge(T[] arr, T[] left, T[] right, Comparator<T> comp) {
-		int left_idx = 0;
-		int right_idx = 0;
-		int original_idx = 0;
-		
-		while(left_idx < left.length && right_idx < right.length) {
-			if(comp.compare(left[left_idx], right[right_idx]) <= 0) {
-				arr[original_idx] = left[left_idx];
-				left_idx++;
-			} else {
-				arr[original_idx] = right[right_idx];
-				right_idx++;
-			}
-			original_idx++;
-		}
-		
-		while(left_idx < left.length) {
-			arr[original_idx] = left[left_idx];
-			left_idx++;
-			original_idx++;
-		}
-		
-		while(right_idx < right.length) {
-			arr[original_idx] = right[right_idx];
-			right_idx++;
-			original_idx++;
-		}
-	}
-	
-	public void mergeSort_int(Integer[] arr) {
+	// Implement Merge Sort.
+	public void mergeSort(Integer[] arr) {
 		if(arr.length <= 1) {
 			return;
 		}
@@ -222,13 +179,14 @@ public class Sorting {
 		Integer[] left = copy_range_int(arr, 0, mid_idx);	
 		Integer[] right = copy_range_int(arr, mid_idx, length);
 		
-		mergeSort_int(left);
-		mergeSort_int(right);
+		mergeSort(left);
+		mergeSort(right);
 				
-		merge_int(arr, left, right);
+		merge(arr, left, right);
 	}
 	
-	private static void merge_int(Integer[] arr, Integer[] left, Integer[] right) {
+	// Helper method for Merge Sort.
+	private static void merge(Integer[] arr, Integer[] left, Integer[] right) {
 		int left_idx = 0;
 		int right_idx = 0;
 		int original_idx = 0;
@@ -257,19 +215,8 @@ public class Sorting {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static <T> T[] copy_range(T[] arr, int start, int end) {
-		T[] copy = (T[]) new Object[end - start];
-		
-		int copy_curr = 0;
-		
-		for(int i = start; i < end; i++) {
-			copy[copy_curr] = arr[i];
-			copy_curr++;
-		}
-		return copy;
-	}
-	
+	// Splits an array of Integers via the provided start and end indices.
+	// Helper method for Merge Sort. 
 	private Integer[] copy_range_int(Integer[] arr, int start, int end) {
 		Integer[] copy = new Integer[end - start];
 		

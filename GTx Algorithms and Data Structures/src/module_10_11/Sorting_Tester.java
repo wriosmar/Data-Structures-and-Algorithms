@@ -4,9 +4,7 @@ public class Sorting_Tester {
 
 	public static void main(String[] args) {
 		int[] test = new int[] {1000, 2014, 231, 53, 10, -92, -9403, 634, -207};
-		Sorting sort = new Sorting();
 		
-		Sorting.lsdRadixSort(test);
 		print(test);
 		
 		
