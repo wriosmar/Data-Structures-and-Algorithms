@@ -5,8 +5,8 @@ import java.util.List;
 public class PatternMatching_Tester {
 
 	public static void main(String[] args) {
-		String text = "abcacababc";
-		String pattern = "abc";
+		String text = "BABADCDABCDA";
+		String pattern = "ABCD";
 		
 		List<Integer> results = PatternMatching.boyerMoore(pattern, text);
 		
