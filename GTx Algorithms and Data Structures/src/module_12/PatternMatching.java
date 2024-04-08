@@ -8,8 +8,10 @@ import java.util.Map;
 public class PatternMatching {
 	
 	public static List<Integer> boyerMoore(CharSequence pattern, CharSequence text){
+		// List to be returned. 
 		List<Integer> foundIndx = new LinkedList<Integer>();
 		
+		// Last Table
 		Map<Character, Integer> last = buildLastTable(pattern);
 		int n = text.length();
 		int m = pattern.length();
@@ -78,6 +80,26 @@ public class PatternMatching {
 		}
 		
 		return last;
+	}
+	
+	public static List<Integer> KMP(CharSequence pattern, CharSequence text) {
+		
+		return null;
+	}
+	
+	public static List<Integer> RK(CharSequence pattern, CharSequence text) {
+		
+		return null;
+	}
+	
+	public static int initialHash(CharSequence pattern) {
+		
+		return 0;
+	}
+	
+	public static int rollingHash(int oldHash, char oldChar, char newChar) {
+		
+		return 0;
 	}
 
 }
