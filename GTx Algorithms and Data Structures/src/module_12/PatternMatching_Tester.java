@@ -5,8 +5,8 @@ import java.util.List;
 public class PatternMatching_Tester {
 
 	public static void main(String[] args) {
-		String text = "abacacbadabc";
-		String pattern = "bc";
+		String text = "I am Willy and this is a test for patterns.";
+		String pattern = " ";
 		
 		List<Integer> results = PatternMatching.rabinKarp(pattern, text);
 		
