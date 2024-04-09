@@ -39,7 +39,7 @@ public class PatternMatching {
 		return foundIndx;
 	}
 	
-	// Homework assignment.
+	// Homework assignment. Uses Homework formatting. 
 	public static List<Integer> boyerMoore(CharSequence pattern, CharSequence text, CharacterComparator comparator) {
 		List<Integer> foundIndx = new LinkedList<Integer>();
 		
@@ -82,24 +82,65 @@ public class PatternMatching {
 		return last;
 	}
 	
-	public static List<Integer> KMP(CharSequence pattern, CharSequence text) {
+	public static List<Integer> knuthMorrisPratt(CharSequence pattern, CharSequence text) {
 		
 		return null;
 	}
 	
-	public static List<Integer> RK(CharSequence pattern, CharSequence text) {
+	public static Map<Character, Integer> buildFailureTable(CharSequence text) {
 		
 		return null;
 	}
 	
-	public static int initialHash(CharSequence pattern) {
+	public static List<Integer> rabinKarp(CharSequence pattern, CharSequence text) {
+		// List to be returned.
+		List<Integer> foundIndx = new LinkedList<Integer>();
 		
-		return 0;
+		int BASE = 1;
+		int n = text.length();
+		int m = pattern.length();
+		
+		int patternHash = createHash(pattern, BASE);
+		int mTextHash = createHash(text.subSequence(0, m), BASE);
+		
+		for(int i = 0; i <= n - m; i++) {
+			if(mTextHash != patternHash && i < n - m) {
+				// update rolling Hash.
+				mTextHash = rollingHash(text, i, i + m, mTextHash, m, BASE);
+			} else {
+				// compare m text to pattern
+				if(isEqual(pattern, text.subSequence(i, i + m))) {
+					foundIndx.add(i);
+				}
+			}
+		}
+		
+		return foundIndx;
 	}
 	
-	public static int rollingHash(int oldHash, char oldChar, char newChar) {
+	public static int createHash(CharSequence pattern, int BASE) {
+		int hash = 0;
 		
-		return 0;
+		for(int i = 0; i < pattern.length(); i++) {
+			hash += pattern.charAt(i) * Math.pow(BASE, i);
+		}
+		
+		return hash;
+	}
+	
+	public static int rollingHash(CharSequence text, int oldIndx, int newIndx, int oldHash, int m, int BASE) {
+		int newHash = (int) ((oldHash - text.charAt(oldIndx) * Math.pow(BASE, m - 1)) * BASE + text.charAt(newIndx));
+		
+		return newHash;
+	}
+	
+	public static boolean isEqual(CharSequence char1, CharSequence char2) {
+		for(int i = 0; i < char1.length(); i++) {
+			if(char1.charAt(i) != char2.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

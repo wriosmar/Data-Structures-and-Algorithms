@@ -5,10 +5,10 @@ import java.util.List;
 public class PatternMatching_Tester {
 
 	public static void main(String[] args) {
-		String text = "BABADCDABCDA";
-		String pattern = "ABCD";
+		String text = "abacacbadabc";
+		String pattern = "bc";
 		
-		List<Integer> results = PatternMatching.boyerMoore(pattern, text);
+		List<Integer> results = PatternMatching.rabinKarp(pattern, text);
 		
 		print(results);
 	}
