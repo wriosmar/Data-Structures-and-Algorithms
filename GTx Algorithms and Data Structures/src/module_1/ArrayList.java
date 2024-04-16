@@ -1,5 +1,7 @@
 package module_1;
 
+import java.util.NoSuchElementException;
+
 public class ArrayList {
 	private int INITIAL_CAPACITY = 5;
 	private Object[] array;
@@ -32,6 +34,10 @@ public class ArrayList {
 	// adds an element to the front of the array and shifts elements to the right.
 	// O(n)
 	public void addToFront(Object newObject) {
+		if(newObject == null) {
+			throw new IllegalArgumentException("Data can't be null");
+		}
+		
 		// check to see if resize is necessary.
 		if(size == array.length) {
 			array = resize();
@@ -47,6 +53,10 @@ public class ArrayList {
 	// adds an element to the back of the array.
 	// O(1)
 	public void addToBack(Object newObject) {
+		if(newObject == null) {
+			throw new IllegalArgumentException("Data can't be null");
+		}
+		
 		// check to see if resize is necessary.
 		if(size == array.length) {
 			array = resize();
@@ -59,12 +69,17 @@ public class ArrayList {
 	// returns the removed element.
 	// O(n)
 	public Object removeFromFront() {
+		if(size == 0) {
+			throw new NoSuchElementException("Array is empty");
+		}
+		
 		// get removed Object.
 		Object removed = array[0];
 		// shift elements to the left.
 		for(int i = 0; i < size - 1; i++) {
 			array[i] = array[i + 1];
 		}
+		array[size - 1] = null;
 		size--;
 		return removed;
 	}
@@ -73,10 +88,15 @@ public class ArrayList {
 	// returns the removed element.
 	// O(1)
 	public Object removeFromBack() {
+		if(size == 0) {
+			throw new NoSuchElementException("Array is empty");
+		}
+		
 		// get removed Object.
-		Object removed = array[array.length - 1];
+		Object removed = array[size - 1];
 		// last element is set to null.
-		array[size--] = null;
+		array[size - 1] = null;
+		size--;
 		return removed;
 	}
 	
