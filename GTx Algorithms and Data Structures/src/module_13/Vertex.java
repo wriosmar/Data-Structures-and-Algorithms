@@ -1,5 +1,5 @@
 package module_13;
 
-public class Vertex {
+public class Vertex<T> {
 
 }
