@@ -11,6 +11,7 @@ import java.util.Set;
 
 public class GraphAlgorithms {
 	
+	// WRONG
 	public static <T> List<Vertex<T>> bfs(Vertex<T> start, Graph<T> graph) {
 		Set<Vertex<T>> VS = new HashSet<>();
 		Queue<Vertex<T>> Q = new LinkedList<>();
@@ -41,7 +42,26 @@ public class GraphAlgorithms {
 	
 	public static <T> List<Vertex<T>> dfs(Vertex<T> start, Graph<T> graph) {
 		Set<Vertex<T>> VS = new HashSet<>();
-		return null;
+		
+		List<Vertex<T>> visited = new LinkedList<>();
+		
+		dfsR(start, graph, VS, visited);
+		
+		return visited;
+	}
+	
+	private static <T> void dfsR(Vertex<T> v, Graph<T> graph, Set<Vertex<T>> vs, List<Vertex<T>> vl) {
+		vs.add(v);
+		
+		vl.add(v);
+		
+		List<VertexDistance<T>> neighbors = graph.getAdjList().getOrDefault(v, new ArrayList<>());
+		
+		for(VertexDistance<T> currN : neighbors) {
+			if(!vs.contains(currN.getVertex())) {
+				dfsR(currN.getVertex(), graph, vs, vl);
+			}
+		}
 	}
 
 }
