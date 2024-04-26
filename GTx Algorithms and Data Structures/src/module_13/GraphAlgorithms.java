@@ -11,54 +11,68 @@ import java.util.Set;
 
 public class GraphAlgorithms {
 	
+	// Breadth First Search.
 	public static <T> List<Vertex<T>> bfs(Vertex<T> start, Graph<T> graph) {
-		Set<Vertex<T>> VS = new HashSet<>();
-		Queue<Vertex<T>> Q = new LinkedList<>();
+		Set<Vertex<T>> visitedSet = new HashSet<>();
+		Queue<Vertex<T>> queue = new LinkedList<>();
+		// List to be returned. 
+		List<Vertex<T>> visitedList = new LinkedList<>();
 		
-		List<Vertex<T>> visited = new LinkedList<>();
+		visitedSet.add(start);
+		queue.add(start);
 		
-		VS.add(start);
-		Q.add(start);
+		visitedList.add(start);
 		
-		visited.add(start);
-		
-		while(!Q.isEmpty()) {
-			Vertex<T> currV = Q.remove();
+		while(!queue.isEmpty()) {
+			Vertex<T> currV = queue.remove();
 			List<VertexDistance<T>> neighbors = graph.getAdjList().getOrDefault(currV, new ArrayList<>());
 			
 			for(VertexDistance<T> currN : neighbors) {
-				if(!VS.contains(currN.getVertex())) {
-					VS.add(currN.getVertex());
-					Q.add(currN.getVertex());
+				// adjacent vertex.
+				Vertex<T> adjVertex = currN.getVertex();
+				
+				if(!visitedSet.contains(adjVertex)) {
+					visitedSet.add(adjVertex);
+					queue.add(adjVertex);
 					
-					visited.add(currN.getVertex());
+					visitedList.add(adjVertex);
 				}
 			}
 		}
 		
-		return visited;
+		return visitedList;
 	}
 	
+	// Depth Breadth Search.
 	public static <T> List<Vertex<T>> dfs(Vertex<T> start, Graph<T> graph) {
-		Set<Vertex<T>> VS = new HashSet<>();
+		Set<Vertex<T>> visitedSet = new HashSet<>();
+		// List to be returned. 
+		List<Vertex<T>> visitedList = new LinkedList<>();
+		// recursive implementation. 
+		dfsR(start, graph, visitedSet, visitedList);
 		
-		List<Vertex<T>> visited = new LinkedList<>();
-		
-		dfsR(start, graph, VS, visited);
-		
-		return visited;
+		return visitedList;
 	}
 	
-	private static <T> void dfsR(Vertex<T> v, Graph<T> graph, Set<Vertex<T>> vs, List<Vertex<T>> vl) {
+	// v is vertex.
+	// g is graph.
+	// vs is visited set.
+	// vl is visited list.
+	private static <T> void dfsR(Vertex<T> v, Graph<T> g, Set<Vertex<T>> vs, List<Vertex<T>> vl) {
+		// add to visited set.
 		vs.add(v);
-		
+		// add to visited list.
 		vl.add(v);
 		
-		List<VertexDistance<T>> neighbors = graph.getAdjList().getOrDefault(v, new ArrayList<>());
+		// get the list of adjacent neighbors. 
+		List<VertexDistance<T>> neighbors = g.getAdjList().getOrDefault(v, new ArrayList<>());
 		
 		for(VertexDistance<T> currN : neighbors) {
-			if(!vs.contains(currN.getVertex())) {
-				dfsR(currN.getVertex(), graph, vs, vl);
+			// adjacent vertex.
+			Vertex<T> adjVertex = currN.getVertex();
+			
+			if(!vs.contains(adjVertex)) {
+				dfsR(adjVertex, g, vs, vl);
 			}
 		}
 	}
