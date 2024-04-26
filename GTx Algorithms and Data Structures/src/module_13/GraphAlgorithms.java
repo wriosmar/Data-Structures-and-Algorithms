@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class GraphAlgorithms {
 	
-	// WRONG
 	public static <T> List<Vertex<T>> bfs(Vertex<T> start, Graph<T> graph) {
 		Set<Vertex<T>> VS = new HashSet<>();
 		Queue<Vertex<T>> Q = new LinkedList<>();
@@ -28,7 +27,7 @@ public class GraphAlgorithms {
 			List<VertexDistance<T>> neighbors = graph.getAdjList().getOrDefault(currV, new ArrayList<>());
 			
 			for(VertexDistance<T> currN : neighbors) {
-				if(VS.contains(currN.getVertex())) {
+				if(!VS.contains(currN.getVertex())) {
 					VS.add(currN.getVertex());
 					Q.add(currN.getVertex());
 					
