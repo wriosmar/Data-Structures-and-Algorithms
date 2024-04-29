@@ -1,11 +1,11 @@
 package module_13;
 
 import java.util.List;
-import java.util.ArrayDeque;
+//import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
+//import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -54,10 +54,11 @@ public class GraphAlgorithms {
 		return visitedList;
 	}
 	
-	// v is vertex.
-	// g is graph.
-	// vs is visited set.
-	// vl is visited list.
+	/* Depth Breadth Search Helper Method. 
+	v is vertex.
+	g is graph.
+	vs is visited set.
+	vl is visited list. */
 	private static <T> void dfsR(Vertex<T> v, Graph<T> g, Set<Vertex<T>> vs, List<Vertex<T>> vl) {
 		// add to visited set.
 		vs.add(v);
@@ -77,4 +78,8 @@ public class GraphAlgorithms {
 		}
 	}
 
+	// Prim's Algorithm.
+	public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
+		return null;
+	}
 }
