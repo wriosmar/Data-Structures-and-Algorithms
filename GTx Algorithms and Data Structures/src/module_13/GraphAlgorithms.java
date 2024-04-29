@@ -80,6 +80,47 @@ public class GraphAlgorithms {
 
 	// Prim's Algorithm.
 	public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
-		return null;
+		// MST set to be returned.
+		Set<Edge<T>> mst = new HashSet<>();
+		Set<Vertex<T>> visitedSet = new HashSet<>();
+		Queue<Edge<T>> priorityQueue = new LinkedList<>();
+		
+		for(Edge<T> edge : graph.getEdges()) {
+			priorityQueue.add(edge);
+		}
+		
+		visitedSet.add(start);
+		
+		while(!priorityQueue.isEmpty() && visitedSet.size() != graph.getVertices().size()) {
+			// Edges are in the form: (Vertex u, Vertex v, Integer weight).
+			Edge<T> currEdge = priorityQueue.remove();
+			Vertex<T> v = currEdge.getV();
+			
+			if(!visitedSet.contains(v)) {
+				visitedSet.add(v);
+				mst.add(currEdge);
+				
+				// Get Vertex v's neighbors that have NOT been visited.
+				List<VertexDistance<T>> neighbors = graph.getAdjList().get(v);
+				
+				for(VertexDistance<T> currNeighbor : neighbors) {
+					// Adjacent Vertex
+					Vertex<T> adjVertex = currNeighbor.getVertex();
+					int adjWeight = currNeighbor.getDistance();
+					
+					if(!visitedSet.contains(adjVertex)) {
+						priorityQueue.add(new Edge<T>(v, adjVertex, adjWeight));
+					}
+				}
+				
+			}
+		}
+		
+		// Check if the MST is valid.
+		if(mst.size() != 2 * (graph.getVertices().size() - 1)) {
+			return null;
+		}
+		
+		return mst;
 	}
 }
