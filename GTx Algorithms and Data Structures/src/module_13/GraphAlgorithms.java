@@ -80,9 +80,9 @@ public class GraphAlgorithms {
 	}
 
 	// Prim's Algorithm.
-	public static <T> List<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
+	public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
 		// MST set to be returned.
-		List<Edge<T>> mst = new ArrayList<>();
+		Set<Edge<T>> mst = new HashSet<>();
 		Set<Vertex<T>> visitedSet = new HashSet<>();
 		PriorityQueue<Edge<T>> priorityQueue = new PriorityQueue<>();
 		

@@ -59,7 +59,7 @@ public class GraphAlgorithms_Tester {
 		
 		Graph<String> testG = new Graph<String>(testV, testE);
 		
-		List<Edge<String>> testPrims = GraphAlgorithms.prims(H, testG);
+		Set<Edge<String>> testPrims = GraphAlgorithms.prims(H, testG);
 		
 		for(Edge<String> edge : testPrims) {
 			System.out.println(edge.toString());
