@@ -1,6 +1,7 @@
 package module_13;
 
 import java.util.List;
+import java.util.PriorityQueue;
 //import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -79,48 +80,54 @@ public class GraphAlgorithms {
 	}
 
 	// Prim's Algorithm.
-	public static <T> Set<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
+	public static <T> List<Edge<T>> prims(Vertex<T> start, Graph<T> graph) {
 		// MST set to be returned.
-		Set<Edge<T>> mst = new HashSet<>();
+		List<Edge<T>> mst = new ArrayList<>();
 		Set<Vertex<T>> visitedSet = new HashSet<>();
-		Queue<Edge<T>> priorityQueue = new LinkedList<>();
+		PriorityQueue<Edge<T>> priorityQueue = new PriorityQueue<>();
 		
 		for(Edge<T> edge : graph.getEdges()) {
-			priorityQueue.add(edge);
+			if(start == edge.getU()) {
+				priorityQueue.add(edge);
+			}
 		}
 		
 		visitedSet.add(start);
 		
 		while(!priorityQueue.isEmpty() && visitedSet.size() != graph.getVertices().size()) {
-			// Edges are in the form: (Vertex u, Vertex v, Integer weight).
-			Edge<T> currEdge = priorityQueue.remove();
+			Edge<T> currEdge = priorityQueue.poll();
 			Vertex<T> v = currEdge.getV();
 			
 			if(!visitedSet.contains(v)) {
 				visitedSet.add(v);
 				mst.add(currEdge);
+				mst.add(new Edge<T>(currEdge.getV(), currEdge.getU(), currEdge.getWeight()));
 				
-				// Get Vertex v's neighbors that have NOT been visited.
 				List<VertexDistance<T>> neighbors = graph.getAdjList().get(v);
 				
-				for(VertexDistance<T> currNeighbor : neighbors) {
-					// Adjacent Vertex
-					Vertex<T> adjVertex = currNeighbor.getVertex();
-					int adjWeight = currNeighbor.getDistance();
+				for(VertexDistance<T> adjN : neighbors) {
+					Vertex<T> adjV = adjN.getVertex();
 					
-					if(!visitedSet.contains(adjVertex)) {
-						priorityQueue.add(new Edge<T>(v, adjVertex, adjWeight));
+					if(!visitedSet.contains(adjV)) {
+						priorityQueue.add(new Edge<T>(v, adjV, adjN.getDistance()));
 					}
 				}
 				
+				/*
+				for(Edge<T> adjEdge : graph.getEdges()) {
+					if(adjEdge.getU() == v && !visitedSet.contains(adjEdge.getV())) {
+						priorityQueue.add(adjEdge);
+					}
+				}
+				*/
 			}
 		}
 		
-		// Check if the MST is valid.
-		if(mst.size() != 2 * (graph.getVertices().size() - 1)) {
-			return null;
+		// Check if valid MST
+		if(mst.size() == 2 * (graph.getVertices().size() - 1)) {
+			return mst;
 		}
 		
-		return mst;
+		return null;
 	}
 }
