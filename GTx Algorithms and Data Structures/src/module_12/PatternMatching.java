@@ -1,5 +1,7 @@
 package module_12;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,9 +89,35 @@ public class PatternMatching {
 		return null;
 	}
 	
-	public static Map<Character, Integer> buildFailureTable(CharSequence text) {
+	public static int[] buildFailureTable(CharSequence text) {
+		int m = text.length();
 		
-		return null;
+		int[] ft = new int[text.length()];
+		ft[0] = 0;
+		
+		int i = 0;
+		int j = 1;
+		
+		//System.out.print("Start: " + ft[0] + " ");
+		
+		while(j < m) {
+			// System.out.print(i + ":" + j + " ");
+			if(text.charAt(i) == text.charAt(j)) {
+				// System.out.print("Case1" + " ");
+				ft[j] = i + 1;
+				i++;
+				j++;
+			} else if(text.charAt(i) != text.charAt(j) && i == 0) {
+				// System.out.print("Case2" + " ");
+				ft[j] = 0;
+				j++;
+			} else {
+				// System.out.print("Case3" + " ");
+				i = ft[i - 1];
+			}
+		}
+		
+		return ft;
 	}
 	
 	public static List<Integer> rabinKarp(CharSequence pattern, CharSequence text) {

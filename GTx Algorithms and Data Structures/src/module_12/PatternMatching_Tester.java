@@ -10,7 +10,14 @@ public class PatternMatching_Tester {
 		
 		List<Integer> results = PatternMatching.rabinKarp(pattern, text);
 		
-		print(results);
+		// print(results);
+		
+		String patt = "AABAAACABAABBCAABA";
+		int[] patternF = PatternMatching.buildFailureTable(patt);
+		
+		for(int i = 0; i < patternF.length; i++) {
+			System.out.print(patternF[i] + " ");
+		}
 	}
 	
 	public static void print(List<Integer> list) {
