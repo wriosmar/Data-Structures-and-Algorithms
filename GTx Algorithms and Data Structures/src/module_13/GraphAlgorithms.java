@@ -87,7 +87,7 @@ public class GraphAlgorithms {
 		PriorityQueue<Edge<T>> priorityQueue = new PriorityQueue<>();
 		
 		for(Edge<T> edge : graph.getEdges()) {
-			if(start == edge.getU()) {
+			if(start.equals(edge.getU())) {
 				priorityQueue.add(edge);
 			}
 		}
@@ -112,14 +112,6 @@ public class GraphAlgorithms {
 						priorityQueue.add(new Edge<T>(v, adjV, adjN.getDistance()));
 					}
 				}
-				
-				/*
-				for(Edge<T> adjEdge : graph.getEdges()) {
-					if(adjEdge.getU() == v && !visitedSet.contains(adjEdge.getV())) {
-						priorityQueue.add(adjEdge);
-					}
-				}
-				*/
 			}
 		}
 		
@@ -127,6 +119,11 @@ public class GraphAlgorithms {
 		if(mst.size() == 2 * (graph.getVertices().size() - 1)) {
 			return mst;
 		}
+		
+		return null;
+	}
+	
+	public static <T> Set<Edge<T>> dijkstra(Vertex<T> start, Graph<T> graph) {
 		
 		return null;
 	}
